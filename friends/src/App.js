@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import FriendsContext from './context/FriendsContext';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 
 import FriendsList from './components/FriendsList';
+import Login from './components/Login';
+import PrivateRoute from './components/PrivateRoute';
 
+import axios from 'axios';
 import './App.css';
 
 
@@ -24,24 +27,29 @@ const App = () => {
   }, []);
 
   return (
-    <FriendsContext.Provider value={{ friends, setFriends }}>
-      <div className="app-container">
-        <div className='home-header'>
-          <h1>Friends</h1>
-        </div>
-          <div className='friends-list-container'>
-            <FriendsList />
+    <Router>
+      <FriendsContext.Provider value={{ friends, setFriends }}>
+        <div className="app-container">
+          <div className='home-header'>
+            <h1>Friends</h1>
+            <ul>
+              <li>
+                <Link to='/login'>Login</Link>
+              </li>
+              <li>
+                <Link to='/protected'>Protected Page</Link>
+              </li>
+            </ul>
           </div>
-      </div>
-      </FriendsContext.Provider>
+            <Switch>
+              <PrivateRoute exact path='/protected' component={FriendsList} />
+              <Route path='/login' component={Login} />
+              <Route component={Login} />
+            </Switch>
+        </div>
+        </FriendsContext.Provider>
+    </Router>
   );
 }
 
 export default App;
-
-
-{/* <Switch>
-              <PrivateRoute path='/home' component={FriendsList} />
-              <Route path='/login' component={Login} />
-              <Route component={Login} />
-            </Switch> */}
