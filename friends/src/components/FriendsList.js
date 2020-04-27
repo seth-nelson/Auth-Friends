@@ -1,15 +1,17 @@
 import React, { useContext } from 'react';
+import { FriendsContext } from '../context/FriendsContext';
+import Friend from './Friend';
 
 
 const FriendsList = () => {
 
-    const { friends } = useContext(setFriends);
+    const { friends } = useContext(FriendsContext);
 
     return (
-        <h2>Friends... literally!</h2>
-            <div className='friends-list-container'>
-                {friends.map(person => <Friend key={person.id} {...person} /> )}
-            </div>
+        <div className='friends-list-container'>
+            <h2>The Crew</h2>
+            {friends.map(person => <Friend key={person.id} {...person} /> )}
+        </div>
     );
 }
 
