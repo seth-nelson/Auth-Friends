@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import FriendsContext from './context/FriendsContext';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch, Link } from 'react-router-dom';
 
 import FriendsList from './components/FriendsList';
 import Login from './components/Login';
@@ -32,19 +32,11 @@ const App = () => {
         <div className="app-container">
           <div className='home-header'>
             <h1>Friends</h1>
-            <ul>
-              <li>
-                <Link to='/login'>Login</Link>
-              </li>
-              <li>
-                <Link to='/protected'>Protected Page</Link>
-              </li>
-            </ul>
           </div>
             <Switch>
               <PrivateRoute exact path='/protected' component={FriendsList} />
               <Route path='/login' component={Login} />
-              <Route component={Login} />
+              <Redirect to='/login'/>
             </Switch>
         </div>
         </FriendsContext.Provider>

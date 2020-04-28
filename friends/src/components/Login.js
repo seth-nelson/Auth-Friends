@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-import axios from 'axios';
+import axiosWithAuth from '../utils/axiosWithAuth';
 
 
-const Login = () => {
+const Login = props => {
 
     // const createLogin = useContext(CredentialsContext)
     //set up context API if necessary
@@ -19,21 +19,21 @@ const Login = () => {
 
     const handleSubmit = e => {
         e.preventDefault();
-        axios
+        axiosWithAuth()
             .post('http://localhost:5000/api/login', credentials)
             .then(result => {
-                console.log('Login.js: login res success', result);
+                console.log('Login.js: login res success', result.data);
             localStorage.setItem('token', result.data.payload);
+            props.history.push('/friendsList')
             })
             .catch(err => console.log('error with post', err))
-
     };
 
 
     return (
         <div className='login-form'>
             <h1>Login</h1>
-            <form onSubmit={credentials} >
+            <form onSubmit={handleSubmit} >
                 <input 
                     type='text'
                     name='username'
@@ -42,13 +42,13 @@ const Login = () => {
                     onChange={handleChanges}
                 />
                 <input 
-                    type='text'
+                    type='password'
                     name='password'
                     value={credentials.password}
                     placeholder='Password'
                     onChange={handleChanges}
                 />
-                <button onClick={handleSubmit}>Sign In</button>
+                <button type='submit'>Sign In</button>
             </form>
         </div>
     );
