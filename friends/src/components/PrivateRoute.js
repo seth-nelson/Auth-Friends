@@ -9,11 +9,11 @@ import { Route, Redirect } from 'react-router-dom';
 // Below is destructuring, pulling component out of props and renaming as a capital component so it can render. ...props then passes the rest of the properties of the component
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    return <Route {...rest } render={props => {
+    return <Route { ...rest } render={props => {
         if (localStorage.getItem('token')) {
-            return <Component {...props} />
+            return <Component />
         } else {
-            return <Redirect to='/' />;
+            return <Redirect to='/login' />;
         }
     }} 
     />
