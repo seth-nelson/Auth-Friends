@@ -14,24 +14,20 @@ const AddFriend = props => {
         addNewFriend({ ...newFriend, [e.target.name]: e.target.value });
     };
 
-    let count = props.update
-
     const submitForm = e => {
         e.preventDefault();
         axiosWithAuth()
             .post('http://localhost:5000/api/friends', newFriend)
-            .then(res => console.log('new friend post', res.data))
+            .then(res => props.setFriends(res.data))
             .catch(err => console.error('new friend post error', err))
 
         addNewFriend({ name: '', age: '', email: ''})
-        props.setUpdate(count++);
-        console.log('count', count);
     }       
 
 
     return (
         <div className='new-friend-form'>
-            <h4>Add New Friend</h4>
+            <h3>Add New Friend</h3>
             <form onSubmit={submitForm}>
                 <input
                     type='text'

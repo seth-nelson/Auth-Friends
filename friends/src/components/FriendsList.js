@@ -8,7 +8,6 @@ import axiosWithAuth from '../utils/axiosWithAuth';
 const FriendsList = () => {
 
     const [ friends, setFriends ] = useState([]);
-    const [ update, setUpdate ] = useState(0)
 
     useEffect(() => {
 
@@ -21,13 +20,13 @@ const FriendsList = () => {
             .catch(error => {
                 console.error('error pulling data', error);
             })
-    }, [update]);
+    }, []);
 
 
     return (
         <div className='friends-list-container'>
             <h2>The Crew</h2>
-            <AddFriend setUpdate={setUpdate} update={update} />
+            <AddFriend setFriends={setFriends} />
             {friends.map(friend => {
                 return <Friend key={friend.id} { ...friend } /> })}
         </div>
